@@ -12,7 +12,7 @@ def create_labeled_data():
     ylist = list()
     with open(("Data/train-io.txt"), "r", encoding="utf-8") as f:
         for i, line in enumerate(f):
-            if i <= 300000:
+            if i <= 3000:
                 for word in line.split():
                     minlist.append(word)
                 for x, word in enumerate(minlist):
@@ -41,7 +41,7 @@ def test_data():
     queries = list()
     with open(("Data/test-in.txt"), "r", encoding="utf-8") as f:
          for i, line in enumerate(f):
-            if i <= 10000:
+            if i <= 100:
                 for word in line.split():
                     minlist.append(word)
                 queries.append(minlist)
@@ -60,9 +60,9 @@ print(predicted_ans)
 def output_file (predicted_ans):
     with open(("Data/test-out.txt"), "w", encoding="utf-8") as f:
         for label in predicted_ans:
-            # write line to output file
             f.write(label)
             f.write("\n")
             
 output_file(predicted_ans)
 
+ 

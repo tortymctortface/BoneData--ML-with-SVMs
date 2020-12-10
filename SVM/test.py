@@ -6,8 +6,8 @@ from sklearn.svm import SVC
 #Set the parameters (see README for details)
 ###########################################
 
-size_labeled = 2000
-size_test = 20
+size_labeled = 200000
+size_test = 1000
 c=100
 
 ###########################################
