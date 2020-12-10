@@ -2,13 +2,12 @@ from sklearn import svm
 import numpy as np
 from sklearn.svm import SVC
 
-#How many samples do you wish to train the data on. In this case 1 <= size_labeled <= 300000.
-size_labeled = 2000
-#If you are not using the full training set and you wish to use a chunk of the remaining data then input the number of samples to test here. 
-#This is useful for testing the accuracy of the method as the samples in the train-io.txt are labeled. 
-#In this case size_test <= (300000 - size_labeled)
-size_test = 20
+###########################################
+#Set the parameters (see README for details)
+###########################################
 
+size_labeled = 2000
+size_test = 20
 c=100
 
 ###########################################
