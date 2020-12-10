@@ -23,6 +23,20 @@ Here c is the penalty parameter, which represents misclassification or error ter
 
 This will print to console the predicted labels, followed by the actaul labels, followed by the percentage of labels correctly guessed.
 
+#### Results from test.py
+
+1. The first thing I noticed here was that adjusting the c value didn't make much of a difference.
+
+2. I also noticed that as I used more labeled samples the more often the classifier would predict 1 as the result.
+
+3. The other results are as follows:
+   _ With 3 labeled samples used to train the classifier, 3/3 labels were correctly predicted at an accuracy of 100%
+   _ With 10000 labeled samples used to train the classifier, 48/100 labels were correctly predicted at an accuracy of 48%
+   _ With 20000 labeled samples used to train the classifier, 57/100 labels were correctly predicted at an accuracy of 57%
+   _ With 50000 labeled samples used to train the classifier, 52/100 labels were correctly predicted at an accuracy of 52%
+
+I couldn't go any further than this as I am working off of a 7 year old laptop, I left it overnight to try train using 290000 samples and predict the last 10000 but it didn't return anything by the next morning, so more tests to come.
+
 ## Main.py
 
 Running the main.py file will train the classifer (clf) on the entire training set ( totalt of 300000 samples from `train-io.txt`).
