@@ -30,10 +30,10 @@ This will print to console the predicted labels, followed by the actaul labels, 
 2. I also noticed that as I used more labeled samples the more often the classifier would predict 1 as the result.
 
 3. The other results are as follows:
-   _ With 3 labeled samples used to train the classifier, 3/3 labels were correctly predicted at an accuracy of 100%
-   _ With 10000 labeled samples used to train the classifier, 48/100 labels were correctly predicted at an accuracy of 48%
-   _ With 20000 labeled samples used to train the classifier, 57/100 labels were correctly predicted at an accuracy of 57%
-   _ With 50000 labeled samples used to train the classifier, 52/100 labels were correctly predicted at an accuracy of 52%
+   - With 3 labeled samples used to train the classifier, 3/3 labels were correctly predicted at an accuracy of 100%
+   - With 10000 labeled samples used to train the classifier, 48/100 labels were correctly predicted at an accuracy of 48%
+   - With 20000 labeled samples used to train the classifier, 57/100 labels were correctly predicted at an accuracy of 57%
+   - With 50000 labeled samples used to train the classifier, 52/100 labels were correctly predicted at an accuracy of 52%
 
 I couldn't go any further than this as I am working off of a 7 year old laptop, I left it overnight to try train using 290000 samples and predict the last 10000 but it didn't return anything by the next morning, so more tests to come.
 
