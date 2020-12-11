@@ -29,13 +29,13 @@ This will print to console the predicted labels, followed by the actaul labels, 
 
 2. I also noticed that as I used more labeled samples the more often the classifier would predict 1 as the result.
 
-3. The other results are as follows (for each of the following c was set to 100):
-   - With 3 labeled samples used to train the classifier, 3/3 labels were correctly predicted at an accuracy of 100%
-   - With 10000 labeled samples used to train the classifier, 48/100 labels were correctly predicted at an accuracy of 48%
-   - With 20000 labeled samples used to train the classifier, 57/100 labels were correctly predicted at an accuracy of 57%
-   - With 50000 labeled samples used to train the classifier, 52/100 labels were correctly predicted at an accuracy of 52%
+3. The other results are as follows :
+   - With 300 labeled samples used to train the classifier and a c value of 1, 49/100 labels were correctly predicted at an accuracy of 49%
+   - With 300 labeled samples used to train the classifier and a c value of 50, 48/100 labels were correctly predicted at an accuracy of 48%
+   - With 300 labeled samples used to train the classifier and a c value of 100, 48/100 labels were correctly predicted at an accuracy of 48%
+   - With 10000 labeled samples used to train the classifier and a c value of 1, 480/1000 labels were correctly predicted at an accuracy of 48%
 
-I couldn't go any further than this as I am working off of a 7 year old laptop, I left it overnight to try train using 290000 samples and predict the last 10000 but it didn't return anything by the next morning, so more tests to come.
+I couldn't go any further than this as I am working off of a 7 year old laptop, I left it overnight to try train using 100000 samples and predict the last 1000 but it failed to return anything.
 
 ## Main.py
 

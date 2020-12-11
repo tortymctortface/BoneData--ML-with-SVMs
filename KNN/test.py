@@ -1,15 +1,15 @@
 from sklearn import svm
 import numpy as np
 from sklearn.metrics import confusion_matrix 
-from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier 
 
 ###########################################
 #Set the parameters (see README for details)
 ###########################################
 
-size_labeled = 10000
-size_test = 100
-c=50
+size_labeled = 100000
+size_test = 1000
+k=2
 
 ###########################################
 #Training the clf (classifier)
@@ -37,7 +37,7 @@ x, Y = create_labeled_data(size_labeled)
 # convert x into a numpy array
 X = np.array(x)
 # create instance of svm classifier
-clf = SVC(kernel="linear", C=c)
+clf = KNeighborsClassifier(n_neighbors = k)
 # fit the 12-D input to the correct output of 1 or 0
 clf.fit(X, Y)
 

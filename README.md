@@ -9,7 +9,7 @@ Accuracy will be measured on the total number of labels correctly predicted.
 
 The `Compressed_Data` folder contains the two compressed versions of the `text-in.txt` file and the `train-io.txt` file. Once decompressed the files are saved in a folder called `Data`.
 
-The folders `SVM` , all contain a different method of classifying the data in the `test-in.txt` file. These have all been trained using the labeled data in the `train-io.txt` file. The output of each is a file called `test-out.txt`, also in the Data folder, which consists of 10000 lines with either a singular `1` or `0` on each line corresponding to the lines in the `test-in.txt` file.
+The folders `SVM`,`DTC` and `KNN` all contain a different method of classifying the data in the `test-in.txt` file. For training purposes they each use the labeled data in the `train-io.txt` file. The output of each is a file called `test-out.txt`, also in the Data folder, which consists of 10000 lines with either a singular `1` or `0` on each line corresponding to the lines in the `test-in.txt` file.
 
 For a more detailed discussion on how each method preformed please see the _README_'s in each of the folders above.
 

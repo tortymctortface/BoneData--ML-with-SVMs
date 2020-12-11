@@ -1,5 +1,6 @@
 from sklearn import svm
 import numpy as np
+from sklearn.metrics import confusion_matrix 
 from sklearn.tree import DecisionTreeClassifier 
 
 ###########################################
@@ -91,3 +92,5 @@ def accuracy(ans, pr, a):
 
 
 accuracy(ans, predicted_ans, size_test)
+cm = confusion_matrix(ans, predicted_ans) 
+print ( cm )
