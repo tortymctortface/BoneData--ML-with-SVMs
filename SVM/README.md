@@ -29,7 +29,7 @@ This will print to console the predicted labels, followed by the actaul labels, 
 
 2. I also noticed that as I used more labeled samples the more often the classifier would predict 1 as the result.
 
-3. The other results are as follows:
+3. The other results are as follows (for each of the following c was set to 100):
    - With 3 labeled samples used to train the classifier, 3/3 labels were correctly predicted at an accuracy of 100%
    - With 10000 labeled samples used to train the classifier, 48/100 labels were correctly predicted at an accuracy of 48%
    - With 20000 labeled samples used to train the classifier, 57/100 labels were correctly predicted at an accuracy of 57%
@@ -41,3 +41,8 @@ I couldn't go any further than this as I am working off of a 7 year old laptop, 
 
 Running the main.py file will train the classifer (clf) on the entire training set ( totalt of 300000 samples from `train-io.txt`).
 It will then attempt to predict the labels for the samples in `test-in.txt` and will output the results to file called `test.out.txt`, with each label on its own line.
+
+## Issues
+
+- The SVM is extremely slow in comparison to other methods.
+- The optimal C value and how to find it is elusive to me right now.

@@ -1,12 +1,12 @@
 from sklearn import svm
 import numpy as np
-from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier 
 
 ###########################################
-#Choose the C value for the SVM
+#Choose the max-depth of the decision tree
 ###########################################
 
-c = 100
+md = 30
 
 ###########################################
 #Training the clf (classifier)
@@ -33,7 +33,7 @@ x, Y = create_labeled_data()
 # convert x into a numpy array
 X = np.array(x)
 # create instance of svm classifier
-clf = SVC(kernel="linear", C=c)
+clf = DecisionTreeClassifier(max_depth = md)
 # fit the 12-D input to the correct output of 1 or 0
 clf.fit(X, Y)
 
@@ -70,5 +70,3 @@ def output_file (predicted_ans):
             f.write("\n")
             
 output_file(predicted_ans)
-
- 
