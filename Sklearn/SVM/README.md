@@ -21,7 +21,7 @@ Here c is the penalty parameter, which represents misclassification or error ter
 
 #### Output of test.py
 
-This will print to console the predicted labels, followed by the actaul labels, followed by the percentage of labels correctly guessed.
+This will print to console the predicted labels, followed by the actaul labels, followed by the percentage of labels correctly guessed. _Note_ I removed my homemade accuracy function as it wasn't as accurate as I hoped. It still exists in KNN and DTC pending tests.
 
 #### Results from test.py
 

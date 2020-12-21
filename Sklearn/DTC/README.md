@@ -27,7 +27,7 @@ This will print to console the predicted labels, followed by the actaul labels, 
 
 1. The first thing I noticed here was that adjusting the md seemed to randomly affect the accuracy of the predictions. It seems up until a certain depth the accuracy improves and at a certain point it begins to decrease again. I presume I will have the most fun trying to calculate the best parameters for the best prediction accuracy.
 
-2. I noticed it returned results, even from large datasets, relatively fast. #
+2. I noticed it returned results, even from large datasets, relatively fast.
 
 3. The other results are as follows:
    - With 300 labeled samples used to train the classifier at a max depth of 2, 54/100 labels were correctly predicted at an accuracy of 54%
@@ -45,3 +45,5 @@ It will then attempt to predict the labels for the samples in `test-in.txt` and 
 ## Issues
 
 - The optimal md value and how to find it is elusive to me right now.
+
+( f. ( z. z (f ((pi)) (f((7)))))

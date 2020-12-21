@@ -2,15 +2,17 @@ from sklearn import svm
 import numpy as np
 from sklearn.metrics import confusion_matrix 
 from sklearn.svm import SVC
+from sklearn import preprocessing
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score
 
 ###########################################
 #Set the parameters (see README for details)
 ###########################################
 
-size_labeled = 10000
-size_test = 100
-c=50
-
+size_labeled = 100
+size_test = 10
+c=20
 ###########################################
 #Training the clf (classifier)
 ###########################################
@@ -24,10 +26,10 @@ def create_labeled_data(z):
         for i, line in enumerate(f):
             if i <= z:
                 for word in line.split():
-                    minlist.append(word)
+                    minlist.append(float(word))
                 for x, word in enumerate(minlist):
                     if x == 12:
-                        ylist.append(word)
+                        ylist.append(int(word))
                         minlist.remove(word)
                 xlist.append(minlist)
                 minlist = list()
@@ -36,8 +38,9 @@ def create_labeled_data(z):
 x, Y = create_labeled_data(size_labeled)
 # convert x into a numpy array
 X = np.array(x)
+
 # create instance of svm classifier
-clf = SVC(kernel="linear", C=c)
+clf = svm.SVC(C= c, kernel ="rbf", gamma="auto")
 # fit the 12-D input to the correct output of 1 or 0
 clf.fit(X, Y)
 
@@ -54,10 +57,10 @@ def create_test_data(z, a):
         for i, line in enumerate(f):
             if i > z and i <= z + a:
                 for word in line.split():
-                    minlist.append(word)
+                    minlist.append(float(word))
                 for x, word in enumerate(minlist):
                     if x == 12:
-                        answers.append(word)
+                        answers.append(int(word))
                         minlist.remove(word)
                 queries.append(minlist)
                 minlist = list()
@@ -71,26 +74,9 @@ print(predicted_ans)
 print(ans)
 
 #########################################################################
-#Homemade accuracy function based entirely on the number of true outputs
+#How accurate are we..
 #########################################################################
 
-
-def accuracy(ans, pr, a):
-    accuracy_rate = 0
-    for i, letter in enumerate(ans):
-        if letter == pr[i - 1]:
-            accuracy_rate += 1
-    percentage_accuracy_rate = (accuracy_rate / a) * 100
-    print(
-        accuracy_rate,
-        " out of ",
-        a,
-        ". This is an accuracy rate of ",
-        percentage_accuracy_rate,
-        "%",
-    )
-
-
-accuracy(ans, predicted_ans, size_test)
+print(accuracy_score(ans, predicted_ans))
 cm = confusion_matrix(ans, predicted_ans) 
 print ( cm )
