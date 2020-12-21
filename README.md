@@ -13,6 +13,10 @@ The model will be graded with 1 point for every correctly predicted 0 and 3 poin
 
 The `Compressed_Data` folder contains the two compressed versions of the `text-in.txt` file and the `train-io.txt` file. Once decompressed the files are saved in a folder called `Data`.
 
+The `Data` folder contains my pre-tained model (`my_model.pth.tar`) along with my predictions for the `test-in.txt` in a file called `test-out.txt`.
+
+The `Answer for assignment` folder contains a backup of my `test-out.txt` incase it is overwritten.
+
 The folder `Sklearn`contains `SVM`,`DTC` and `KNN`, which all contain a different method of classifying the data in the `test-in.txt` file. For training purposes they each use the labeled data in the `train-io.txt` file. The output of each is a file called `test-out.txt`, also in the Data folder, which consists of 10000 lines with either a singular `1` or `0` on each line corresponding to the lines in the `test-in.txt` file.
 
 The folder `PyTorch`contains `MLP` which works in the same way as above but using the pytorch library instead of sklearn for the classifier.
@@ -25,7 +29,11 @@ To test each of these methods locally you will need to decompress both of the fi
 
 ## Answer to assignment
 
-For the answer for my assignement I have included a `test-out.txt` file in the `Data` folder which contains my 10000 predicted outputs for each of the samples in the `test-in.txt`file. I used the PyTorch library as I found it easiest to achieve the highest accuracy in after some tests on each model. For more information on this see the README.md in the `PyTorch`folder.
+- For the answer for my assignement I have included a `test-out.txt` file in the `Data` folder which contains my 10000 predicted outputs for each of the samples in the `test-in.txt`file. I used the PyTorch library as I found it easiest to achieve the highest accuracy in after some tests on each model. For more information on this see the README.md in the `PyTorch` folder.
+
+- To run this locally simply decompress the files in `Compressed Data` into the `Data` directory.
+- To use my pre-trained model, set the _size_labeled_ in `PyTorch\CNN\test-loaded.py` to 10000 and run it. _Note_ : This will only output to console.
+- To retrain the model using my default parameters simply run the `PyTorch\CNN\main.py`. _Caution_ : This will overwrite my output in the `Data\test-out.txt`file. If this happens there is a backup in the `Answer for assignment` folder.
 
 **References**
 

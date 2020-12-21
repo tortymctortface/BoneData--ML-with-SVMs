@@ -1,7 +1,5 @@
 import numpy as np
-import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
 
 import torch
 import torch.nn as nn
@@ -10,7 +8,7 @@ from torch.utils.data import Dataset, DataLoader
 
 from sklearn.preprocessing import StandardScaler    
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, classification_report
+
 
 ###########################################
 #Set the parameters (see README for details)
@@ -19,8 +17,9 @@ from sklearn.metrics import confusion_matrix, classification_report
 EPOCHS = 120
 BATCH_SIZE = 64
 LEARNING_RATE = 0.0001
-size_labeled = 10000
-size_test = 100
+size_labeled = 300000
+size_test = 10000
+limit = 0.4444
 
 ###########################################
 #Selecting the train x and y sets
@@ -52,28 +51,22 @@ X_train, y_train = create_labeled_data(size_labeled)
 #####################################################################
 
 #to test the ability of this method I added a way to split the training data into a smaller training set and with a section of the training data being used as unlabeled test data 
-def create_test_data(z, a):
+def create_test_data(a):
     minlist = list()
     queries = list()
-    answers = list()
-    with open(("Data/train-io.txt"), "r", encoding="utf-8") as f:
+    with open(("Data/test-in.txt"), "r", encoding="utf-8") as f:
         for i, line in enumerate(f):
-            if i > z and i <= z + a:
+            if i < a:
                 for word in line.split():
                     minlist.append(float(word))
-                for x, word in enumerate(minlist):
-                    if x == 12:
-                        answers.append(int(word))
-                        minlist.remove(word)
                 queries.append(minlist)
                 minlist = list()
-    return queries, answers
+    return queries
 
-
-X_test, y_test = create_test_data(size_labeled, size_test)
+X_test = create_test_data(size_test)
 
 #####################################################################
-#Standaradize the input
+#Standaradize the datasets
 #####################################################################
 
 scaler = StandardScaler()
@@ -113,11 +106,14 @@ test_data = testData(torch.FloatTensor(X_test))
 train_loader = DataLoader(dataset=train_data, batch_size=BATCH_SIZE, shuffle=True)
 test_loader = DataLoader(dataset=test_data, batch_size=1)
 
+###################################################################################
+#Build the model
+###################################################################################
 
 class binaryClassification(nn.Module):
     def __init__(self):
         super(binaryClassification, self).__init__()
-        # Number of input features is 12.
+        # Number of input features is 12 and we have 4 layers.
         self.layer_1 = nn.Linear(12, 64) 
         self.layer_2 = nn.Linear(64, 64)
         self.layer_3 = nn.Linear(64, 64)
@@ -145,28 +141,32 @@ class binaryClassification(nn.Module):
         
         return x
     
-    
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 model = binaryClassification()
 model.to(device)
 criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
+#############################################################################################
+#Saving our model
+#############################################################################################
+def save_checkpoint(state,filename = "Data/my_model.pth.tar"):
+    print ("Saving model...")
+    torch.save(state, filename)
+    print ("Model Saved")
+    
 ########################################################################################
-#Calculate accuracy of the predicted y outputs vs actual y outputs
+#Time to train the model
 ########################################################################################
-
-def binary_acc(y_pred, y_test):
-    y_pred_tag = torch.round(torch.sigmoid(y_pred))
-    correct_results_sum = (y_pred_tag == y_test).sum().float()
-    acc = correct_results_sum/y_test.shape[0]
-    acc = torch.round(acc * 100)
-    return acc
 
 model.train()
 for e in range(1, EPOCHS+1):
     epoch_loss = 0
     epoch_acc = 0
+    if e == 120:
+        checkpoint = {'state_dict': model.state_dict(), 'optimizer': optimizer.state_dict}
+        save_checkpoint(checkpoint)
     for X_batch, y_batch in train_loader:
         X_batch, y_batch = X_batch.to(device), y_batch.to(device)
         optimizer.zero_grad()
@@ -174,17 +174,19 @@ for e in range(1, EPOCHS+1):
         y_pred = model(X_batch)
         
         loss = criterion(y_pred, y_batch.unsqueeze(1))
-        acc = binary_acc(y_pred, y_batch.unsqueeze(1))
+      
         
         loss.backward()
         optimizer.step()
         
         epoch_loss += loss.item()
-        epoch_acc += acc.item()
         
-    print(f'Epoch {e+0:03}: | Loss: {epoch_loss/len(train_loader):.5f} | Acc: {epoch_acc/len(train_loader):.3f}')
+    print(f'Epoch {e+0:03}: | Loss: {epoch_loss/len(train_loader):.5f} ')
     
-    
+#############################################################################################
+#Time to predict - The torch.round has been biased towards 1 if the output is .44444 or above 
+# as there are more points for correct true outputs than for correct false outputs
+#############################################################################################
 y_pred_list = []
 model.eval()
 with torch.no_grad():
@@ -192,7 +194,7 @@ with torch.no_grad():
         X_batch = X_batch.to(device)
         y_test_pred = model(X_batch)
         y_test_pred = torch.sigmoid(y_test_pred)
-        if (float(y_test_pred)) <= 0.44444:
+        if (float(y_test_pred)) <= limit:
             y_pred_tag = torch.round(torch.tensor([[0.1]]))
         else:
             y_pred_tag = torch.round(torch.tensor([[0.9]]))
@@ -200,5 +202,20 @@ with torch.no_grad():
 
 y_pred_list = [a.squeeze().tolist() for a in y_pred_list]
 
-print (confusion_matrix(y_test, y_pred_list))
-print(classification_report(y_test, y_pred_list))
+##############################################################################################
+#output predictions to file
+##############################################################################################
+
+def output_predictions(y_pred_list):
+    y_pred_list = str(y_pred_list)
+    print(y_pred_list)
+    with open(("Data/test-out.txt"), "w", encoding="utf-8") as f:
+        for i in range(len(y_pred_list)):
+            if ((y_pred_list[i]) == "0") and ((y_pred_list[i+1]) == "."):
+                f.write(y_pred_list[i])
+                f.write("\n")
+            elif((y_pred_list[i]) == "1") and ((y_pred_list[i+1]) == "."):
+                f.write(y_pred_list[i])
+                f.write("\n")    
+
+output_predictions(y_pred_list)

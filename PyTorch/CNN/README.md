@@ -1,4 +1,4 @@
-# MLP
+# CNN
 
 ## To run locally
 
@@ -23,6 +23,9 @@ In this case `size_test <= (300000 - size_labeled)`
 The learning rate is the size of the steps you wish to take as your model learns. To big or too small a learning rate and you may risk getting stuck in local minima.
 Side Note : I played with a decaying learning rate but the accuracy was so low on all of my tests that I had to scrap it.
 
+**limit**
+This is the decision boundary for the classifier. Everything <= limit will be classified as 0 and everthing else will be one.
+
 #### Output of test.py
 
 This will print to console the predicted labels followed by the confusion matrix and the fitness report.
@@ -39,13 +42,14 @@ This will print to console the predicted labels followed by the confusion matrix
 
 ## Running main.py
 
-Running the main.py file will train the model on the entire training set ( totalt of 300000 samples from `train-io.txt`).
-It will then attempt to predict the labels for the samples in `test-in.txt` and will output the results to file called `test.out.txt`, with each label on its own line.
-The trained model will also be saved to a file named `my_model.pth.tar`once you are on the 120th epoch. To load this see `test-loaded.py`
+- Running the main.py file will train the model on the entire training set ( totalt of 300000 samples from `train-io.txt`).
+- It will then attempt to predict the labels for the samples in `test-in.txt` and will output the results to file called `test.out.txt`, with each label on its own line.
+- For the purpose of this assignment I have biased the classifier to an output of 1 by setting the _limit_ to 0.4444.
+- The trained model will also be saved to a file named `my_model.pth.tar`once you are on the 120th epoch. To load this see `test-loaded.py`
 
 ## Running test-loaded.py
 
-Running `test-loader.py` will load the trained model in the file named `my_model.pth.tar`. I have saved a model trained on 300000 labeled samples, with 120 epochs and a learning rate of 0.0001. This is in the `Data` folder but will be overwritten when you run the `main.py`locally. You can choose the number of samples from the `test-in.txt` you wish to predict for using the _size_test_ parameter
+- Running `test-loader.py` will load the trained model in the file named `my_model.pth.tar`. I have saved a model trained on 300000 labeled samples, with 120 epochs and a learning rate of 0.0001. This is in the `Data` folder but will be overwritten when you run the `main.py`locally. You can choose the number of samples from the `test-in.txt` you wish to predict for using the _size_test_ parameter
 
 ## Issues
 
